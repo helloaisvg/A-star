@@ -33,12 +33,15 @@ struct Point {
 	}
 
 
-struct Node {
-	Point pos();
-	double h;//启发函数
-	double g;//实际代价
-	double f;//总代价
-	Node* parent;
+	struct Node {
+		Point pos();
+		double h;//启发函数
+		double g;//实际代价
+		double f;//总代价
+		Node* parent;
 
-	Node(Point p,double g,double h,double f,
-};
+		Node(Point pos, double g, double h, double f, Node* parent = nullptr) :pos(pos), g(g), h(h), f(f), parent(parent) {};
+		bool operator<(const Node& other) const{
+			return f > other.f;
+
+	}
