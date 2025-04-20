@@ -13,7 +13,7 @@ using namespace std;
 struct Point {
     int x, y;
     //添加默认构造函数
-    Point() :x(0),y(0)
+    Point() :x(0), y(0) {}
     Point(int x, int y) : x(x), y(y) {}
     bool operator==(const Point& other) const {
         return x == other.x && y == other.y;
@@ -95,19 +95,34 @@ public:
     }
 
     // 启发式函数
-    double heuristic(Point a, Point b) {
+    double heuristic(const Point& a, const Point& b) const{
         return abs(a.x - b.x) + abs(a.y - b.y);  // 曼哈顿距离
     }
 
     // 判断点是否在范围内
-    bool inBounds(Point p) {
+    bool inBounds(const Point& p) const{
         return p.x >= 0 && p.x < width && p.y >= 0 && p.y < height;
     }
 
-    // 获取邻居点
+  /* // 获取邻居点
+//<<<<<<< HEAD
     vector<Point> getNeighbors(const Point& p) const{
+//=======
+    //vector<Point> getNeighbors(Point p) {
+//>>>>>>> 857fe1b1e7fca650de0a710ef35eabcd16423da7
         vector<Point> neighbors;
-        vector<Point> directions = { Point(0, 1), Point(1, 0), Point(0, -1), Point(-1, 0) };
+        const vector<Point> directions = { Point(0, 1), Point(1, 0), Point(0, -1), Point(-1, 0) };
+        for (const auto& dir : directions) {
+            Point neighbor(p.x + dir.x, p.y + dir.y);
+            if (inBounds(neighbor) && grid[neighbor.y][neighbor.x] == 0) {
+                neighbors.push_back(neighbor);
+            }
+        }
+        return neighbors;
+    }*/
+    vector<Point> getNeighbors(const Point& p) const {  // 添加const限定符
+        vector<Point> neighbors;
+        const vector<Point> directions = { {0,1}, {1,0}, {0,-1}, {-1,0} };
         for (const auto& dir : directions) {
             Point neighbor(p.x + dir.x, p.y + dir.y);
             if (inBounds(neighbor) && grid[neighbor.y][neighbor.x] == 0) {
