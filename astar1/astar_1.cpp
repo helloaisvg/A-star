@@ -111,11 +111,11 @@ struct Node {
 					openSet.push(Node(start, 0, h));
 					gValues[start.x][start.y];
 
-					while(!openSet.empty()){
+					while (!openSet.empty()) {
 						Node current = openSet.top();
 						openSet.pop();//获取f值最小的节点
 						//到达终点则回溯路径
-						if (current.pos == end) {
+						if (current.pos == end) {//如果到达终点回溯路径
 							vector<point>path;
 							Node* node = &current;
 							while (node != nullptr) {
@@ -123,10 +123,31 @@ struct Node {
 								node = node->parent;
 
 							}
+							reverse(path.begn(), path.end());
 							return path;
 
 						}
-						closedSet.insert(current.pop);
+						closedSet.insert(current.pop);//吧当前节点加入已探索
+						//探索邻居节点
+						for (auto& neighborPos : getNeighbors(current.pos)) {
+							if (closedSet.count(neighborPos))
+								continue;//已在已探索集合跳过
+							//计算新g
+							int tentativeG = current.g + 1//这里设每步代价是1
+
+								if (testG < gValues[neighborsPos.x][neighborPos.y) {
+									gValues[neighborPos.x][neighborPos.y] = testG;
+									int h = heuristic(neighborPos, end);
+									openSet.push(Node(neighborPos, testG, h, new Node(current)));
+								}
+						}
+					}
+
+			
+					return {};//没有找到路径
+				}
+					void printMap(Point & start, Point & end, vector<Point>&path = {}){
+						unordered_set<Point>
 
 
 
